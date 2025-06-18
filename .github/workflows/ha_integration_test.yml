@@ -1,0 +1,42 @@
+name: Home Assistant Integration Test
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths: [ 'homeassistant/**' ]
+  pull_request:
+    branches: [ main ]
+    paths: [ 'homeassistant/**' ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        cd homeassistant
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Run tests
+      run: |
+        cd homeassistant
+        python -m pytest tests/ -v --cov=custom_components/choretracker
+    
+    - name: Upload coverage
+      uses: codecov/codecov-action@v3
+      with:
+        file: homeassistant/coverage.xml
+        
+    - name: Validate integration
+      run: |
+        cd homeassistant
+        python -c "import custom_components.choretracker" 

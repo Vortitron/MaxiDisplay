@@ -1,0 +1,179 @@
+# ChoreTracker .gitignore
+
+# ===== ESP32 / PlatformIO =====
+esp32/.pio/
+esp32/.vscode/
+esp32/platformio.ini.bak
+esp32/src/config/Config_local.h
+esp32/lib/dependencies/
+esp32/.clang-format
+
+# Build artifacts
+esp32/build/
+esp32/dist/
+esp32/*.bin
+esp32/*.elf
+esp32/*.hex
+
+# ===== Python / Home Assistant =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+homeassistant/.venv/
+
+# Home Assistant specific
+homeassistant/custom_components/choretracker/__pycache__/
+homeassistant/config/secrets.yaml
+homeassistant/config/.HA_VERSION
+homeassistant/config/home-assistant.log*
+homeassistant/config/.storage/
+homeassistant/config/deps/
+
+# ===== Development Tools =====
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Testing artifacts
+tests/reports/
+tests/artifacts/
+**/test_results/
+
+# ===== IDE and Editors =====
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ===== Documentation =====
+docs/_build/
+docs/html/
+docs/latex/
+*.pdf
+*.aux
+*.log
+*.out
+*.toc
+
+# Sphinx documentation
+docs/doctrees/
+docs/build/
+
+# ===== Logs and Temporary Files =====
+*.log
+*.tmp
+*.temp
+logs/
+log/
+
+# ===== Security / Secrets =====
+.env.local
+.env.development
+.env.production
+secrets.yaml
+config_local.*
+*_secrets.*
+*.key
+*.pem
+*.p12
+
+# API keys and tokens
+api_keys.txt
+tokens.txt
+credentials.json
+
+# ===== Hardware Documentation =====
+esp32/docs/hardware/pcb_design/*.gerber
+esp32/docs/hardware/pcb_design/drill_files/
+esp32/docs/hardware/fabrication/
+
+# CAD files working directories
+*.bak
+*.dwl
+*.dwl2
+*.tmp
+
+# ===== Simulation and Testing =====
+esp32/tools/simulator/*.pid
+esp32/tools/simulator/logs/
+simulation_data/
+performance_reports/
+
+# ===== Deployment =====
+deployment_config.yaml
+production_secrets.yaml
+staging_config.yaml
+docker-compose.override.yml
+
+# ===== Monitoring and Analytics =====
+monitoring/data/
+analytics/reports/
+*.rrd
+
+# ===== Package Managers =====
+node_modules/
+package-lock.json
+yarn.lock
+
+# ===== OS Generated Files =====
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# ===== Backup Files =====
+*.backup
+*.bak
+*~
+*.orig
+
+# ===== Project Specific =====
+# Local development configurations
+local_config/
+development_notes.txt
+todo_local.md
+
+# Test hardware configurations
+test_hardware_configs/
+calibration_data/
+
+# Generated documentation
+api_docs_generated/ 

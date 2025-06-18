@@ -1,0 +1,200 @@
+openapi: 3.0.3
+info:
+  title: ChoreTracker API
+  description: REST API for ChoreTracker ESP32 device
+  version: 1.0.0
+  contact:
+    name: ChoreTracker Support
+    url: https://github.com/yourusername/choretracker
+
+servers:
+  - url: http://{device_ip}
+    description: ChoreTracker device
+    variables:
+      device_ip:
+        default: 192.168.1.100
+
+paths:
+  /api/status:
+    get:
+      summary: Get device status
+      description: Returns current device health and operational status
+      responses:
+        '200':
+          description: Device status information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceStatus'
+
+  /api/tasks:
+    get:
+      summary: Get current tasks
+      description: Returns list of active tasks for all persons
+      responses:
+        '200':
+          description: List of current tasks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+
+    post:
+      summary: Refresh tasks from Home Assistant
+      description: Forces a refresh of tasks from HA calendar
+      responses:
+        '200':
+          description: Tasks refreshed successfully
+        '500':
+          description: Failed to refresh tasks
+
+  /api/tasks/{taskId}/complete:
+    post:
+      summary: Mark task as completed
+      description: Marks a specific task as completed via API
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Task marked as completed
+        '404':
+          description: Task not found
+
+  /api/config:
+    get:
+      summary: Get device configuration
+      description: Returns current device configuration
+      responses:
+        '200':
+          description: Device configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceConfig'
+
+    put:
+      summary: Update device configuration
+      description: Updates device configuration parameters
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceConfig'
+      responses:
+        '200':
+          description: Configuration updated successfully
+        '400':
+          description: Invalid configuration
+
+  /api/restart:
+    post:
+      summary: Restart device
+      description: Triggers a device restart
+      responses:
+        '200':
+          description: Device restart initiated
+
+components:
+  schemas:
+    DeviceStatus:
+      type: object
+      properties:
+        device_id:
+          type: string
+          example: "choretracker_001"
+        uptime:
+          type: integer
+          description: Uptime in seconds
+          example: 86400
+        wifi_strength:
+          type: integer
+          description: WiFi signal strength in dBm
+          example: -45
+        memory_free:
+          type: integer
+          description: Free memory in bytes
+          example: 180000
+        last_update:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+        version:
+          type: string
+          example: "1.0.0"
+
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "task_001"
+        title:
+          type: string
+          example: "Brush Teeth"
+        person_id:
+          type: string
+          example: "child1"
+        state:
+          type: string
+          enum: [pending, active, completed, expired, auto_removed]
+          example: "active"
+        type:
+          type: string
+          enum: [untimed, fixed_time, timed_with_early]
+          example: "untimed"
+        start_time:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2024-01-15T09:00:00Z"
+        end_time:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2024-01-15T10:00:00Z"
+        reward:
+          type: string
+          nullable: true
+          example: "Screen Time"
+        reward_time:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2024-01-15T16:00:00Z"
+        switch_id:
+          type: integer
+          description: Associated hardware switch ID
+          example: 1
+
+    DeviceConfig:
+      type: object
+      properties:
+        device_name:
+          type: string
+          example: "ChoreTracker Living Room"
+        update_interval:
+          type: integer
+          description: Task update interval in milliseconds
+          example: 60000
+        display_brightness:
+          type: integer
+          minimum: 0
+          maximum: 255
+          example: 200
+        audio_enabled:
+          type: boolean
+          example: false
+        theme:
+          type: string
+          enum: [default, summer, dark]
+          example: "default"
+        timezone:
+          type: string
+          example: "Europe/London" 
