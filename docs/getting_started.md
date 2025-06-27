@@ -51,13 +51,73 @@ cp -r custom_components/choretracker /path/to/homeassistant/custom_components/
 
 ### ESP32 Configuration
 
-Update `esp32/src/config/Config.h`:
+The ChoreTracker uses a flexible environment-based configuration system:
 
-```cpp
-#define WIFI_SSID "YourWiFiName"
-#define WIFI_PASSWORD "YourWiFiPassword"
-#define HA_SERVER "http://homeassistant.local:8123"
-#define HA_TOKEN "your_long_lived_access_token"
+#### 1. Environment Configuration (.env)
+
+Copy the template and update with your values:
+```bash
+cp env.example .env
+```
+
+Edit `.env` file (never commit this to git):
+```bash
+# WiFi Configuration
+WIFI_SSID=YourWiFiNetworkName
+WIFI_PASSWORD=YourWiFiPassword
+
+# Home Assistant Configuration
+HA_SERVER=http://homeassistant.local:8123
+HA_TOKEN=your_long_lived_access_token_here
+
+# Display Configuration - SCALABLE!
+DISPLAY_COUNT=4  # Supports 1 to 8 displays
+TFT_CS_PINS=9,10,1,3
+SWITCH_PINS=13,12,14,27
+LED_PINS=15,2,0,4
+
+# Optional: Weather API
+WEATHER_API_KEY=your_openweather_api_key
+WEATHER_ENABLED=true
+```
+
+#### 2. Scalable Display Support
+
+The system now supports any number of displays from 1 to 8:
+
+**Single Display (Minimal Setup)**:
+```bash
+DISPLAY_COUNT=1
+TFT_CS_PINS=9
+SWITCH_PINS=13
+LED_PINS=15
+```
+
+**Dual Display Setup**:
+```bash
+DISPLAY_COUNT=2
+TFT_CS_PINS=9,10
+SWITCH_PINS=13,12
+LED_PINS=15,2
+```
+
+**Full 8-Display Setup**:
+```bash
+DISPLAY_COUNT=8
+TFT_CS_PINS=9,10,1,3,39,36,37,38
+SWITCH_PINS=13,12,14,27,26,33,35,34
+LED_PINS=15,2,0,4,5,25,32,21
+```
+
+#### 3. Build with Custom Display Count
+
+```bash
+# Build for specific display count
+cd esp32
+pio run --build-flag="-DDISPLAY_COUNT=4"
+
+# Upload firmware
+pio run -t upload --build-flag="-DDISPLAY_COUNT=4"
 ```
 
 ### Home Assistant Configuration

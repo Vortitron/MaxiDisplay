@@ -58,33 +58,73 @@ ChoreTracker is designed to gamify household chores for children through a dynam
 
 ## Hardware
 
+### Physical Layout
+ChoreTracker features a **2×4 display grid** with intuitive navigation:
+- **8 TFT Displays**: Arranged as 2 rows × 4 columns
+- **8 Task Buttons**: Non-momentary (latching) switches, one per display
+- **8 Task LEDs**: Independent LED control, one per button
+- **2 Row Select Buttons**: Momentary buttons for cycling through columns
+- **LED Logic**: ON = Task Incomplete, OFF = Task Complete
+
 ### Components
 
 | Component | Quantity | Specifications | Estimated Cost |
 |-----------|----------|----------------|----------------|
 | ESP32 DevKitC V4 | 1 | 38-pin development board | ~£7 |
-| ST7789 TFT Display | 8 | 1.9" IPS, 170x320, SPI | ~£3-4 each |
-| Latching Switches | 8 | 5-pin with integrated LED, 3-6V | User sourced |
-| Momentary Buttons | 4 | Wake + 3 screen selectors | ~£1 each |
+| ST7789 TFT Display | 8 | 1.9" IPS, 170×320, SPI | ~£3-4 each |
+| Task Buttons | 8 | Non-momentary with integrated LED | User sourced |
+| Row Select Buttons | 2 | Momentary buttons for navigation | ~£1 each |
 | Power Supply | 1 | 1A USB supply (5V to 3.3V) | ~£5 |
 
 ### GPIO Pinout
 
 ```
-ESP32 Pin Assignments (28/30 pins used):
-├── Switches (Input):     13, 12, 14, 27, 26, 33, 35, 34
-├── LEDs (Output):        15, 2, 0, 4, 5, 25, 32, 21
-├── TFT CS (Output):      9, 10, 1, 3, 39, 36, 37, 38
-├── TFT Shared:           SCK(18), MOSI(23), DC(19), RST(-1)
-├── TFT Backlight:        8 (all displays)
-├── Buttons (Input):      16(Wake), 17, 22, 7(Screens 1-3)
-└── Spare:                11 (available for buzzer/expansion)
+ESP32 Pin Configuration:
+├── Task Buttons (Input):     13, 12, 14, 27, 26, 33, 35, 34  # 8 non-momentary switches
+├── Task LEDs (Output):       15, 2, 0, 4, 5, 25, 32, 21     # 8 independent LEDs
+├── Row Select (Input):       17, 22                          # 2 momentary navigation buttons
+├── TFT CS (Output):          9, 10, 1, 3, 39, 36, 37, 38    # 8 display CS pins
+├── TFT Shared:               SCK(18), MOSI(23), DC(19), RST(-1)
+├── TFT Backlight:            8 (all displays)
+└── Spare:                    11, 16, 7 (buzzer, expansion)
 ```
+
+### Display Layout
+
+```
+Physical Layout:
+┌─────────┬─────────┬─────────┬─────────┐ Row 1 [Select Button: GPIO 17]
+│ Disp 0  │ Disp 1  │ Disp 2  │ Disp 3  │
+│ Child 1 │ Child 2 │ Weather │ Family  │
+└─────────┴─────────┴─────────┴─────────┘
+┌─────────┬─────────┬─────────┬─────────┐ Row 2 [Select Button: GPIO 22]
+│ Disp 4  │ Disp 5  │ Disp 6  │ Disp 7  │
+│ Tasks   │ Tasks   │ Info    │ Tasks   │
+└─────────┴─────────┴─────────┴─────────┘
+
+Task Buttons (One per Display):
+[Btn0/Disp0: GPIO13+LED15] [Btn1/Disp1: GPIO12+LED2] [Btn2/Disp2: GPIO14+LED0] [Btn3/Disp3: GPIO27+LED4]
+[Btn4/Disp4: GPIO26+LED5]  [Btn5/Disp5: GPIO33+LED25] [Btn6/Disp6: GPIO35+LED32] [Btn7/Disp7: GPIO34+LED21]
+```
+
+### Hardware Operation
+
+#### Button Types
+1. **Task Buttons (Non-Momentary)**:
+   - Latching switches that change state when pressed
+   - We detect **state changes**, not button presses
+   - LEDs work independently from button position
+   - Used for task completion confirmation
+
+2. **Row Select Buttons (Momentary)**:
+   - Traditional push buttons
+   - Cycle through columns for their respective row
+   - Show column title on screen 1 of the row for 2 seconds
 
 ### Power Requirements
 - **Total Consumption**: ~460mA maximum
 - **Supply**: 1A USB (5V), regulated to 3.3V
-- **TFT Backlights**: Controlled via GPIO 8 with 100Ω resistors
+- **TFT Backlights**: Controlled via GPIO 8
 
 ## Software Architecture
 
@@ -264,26 +304,78 @@ Progressive Tasks: Art Project, Garden Help, Letter Writing
 
 ## Usage
 
-### Basic Operation
+### Navigation System
 
-1. **Wake Device**: Press wake button to activate displays
-2. **Select Screen**: Use screen buttons (1-3) to switch views
-3. **Complete Tasks**: Flip latching switches to mark tasks complete
-4. **View Progress**: LEDs light up, displays turn green for completed tasks
-5. **Earn Rewards**: Completed task sets display reward information
+#### Column Navigation
+Each row has its own independent navigation:
 
-### Screen Navigation
-- **Wake Button**: Toggle device on/off, return to Screen 0
-- **Button 1**: Switch to Kid 2's tasks (Screen 1)
-- **Button 2**: Switch to Weather display (Screen 2)  
-- **Button 3**: Switch to Shared family tasks (Screen 3)
+1. **Press Row Select Button**: Cycles to next column
+2. **Column Title Display**: Shows on first screen of row for 2 seconds
+3. **Content Display**: Returns to normal content view
+4. **Column Order**: Child 1 → Child 2 → Weather → Family → (repeat)
 
-### Summer Schedule Mode
-On holidays, the device operates in schedule mode:
-1. Completed tasks fade to greyscale
-2. Remaining tasks shift left automatically
-3. New tasks appear from the HA queue
-4. Time-based task progression available
+#### Task Completion
+1. **Toggle Task Button**: Physical switch changes state (one button per display)
+2. **System Detection**: Monitors for state changes (not button presses)  
+3. **LED Feedback**: LED turns OFF when task completed, ON when incomplete
+4. **HA Integration**: Updates corresponding Home Assistant switch
+
+### Example Usage Flow
+
+```
+Initial State: Row 1 showing "Child 1" column, Row 2 showing "Child 1" column
+
+User presses Row 1 select button:
+├── Row 1 Display 0 shows "Child 2" for 2 seconds
+└── Then shows Child 2's actual tasks
+
+User presses Row 2 select button:
+├── Row 2 Display 4 shows "Child 2" for 2 seconds  
+└── Then shows Child 2's tasks on Row 2
+
+User toggles Task Button 0 (for Display 0):
+├── System detects button state change
+├── Task LED 0 turns OFF (task complete)
+├── Marks corresponding task complete
+└── Updates Home Assistant switch
+```
+
+### Hardware Behaviour
+
+#### Non-Momentary Buttons
+Unlike traditional push buttons, these latching switches:
+- **Stay in position** when pressed
+- **Change state** rather than generate press events
+- **Are monitored continuously** for state changes
+- **Provide physical feedback** of completion status
+
+#### Independent LEDs
+The LEDs operate separately from button position:
+- **Software controlled** via ESP32 GPIO
+- **Can indicate** different states than button position
+- **Provide visual feedback** for task completion
+- **Can be programmed** for animations or patterns
+
+### Navigation Logic
+
+#### Row-Based Operation
+Each row operates independently:
+- **Row 1** (Displays 0-3): Controlled by select button on GPIO 17
+- **Row 2** (Displays 4-7): Controlled by select button on GPIO 22
+
+#### Column Cycling
+```cpp
+Column 0: "Child 1"    → Display child 1's tasks
+Column 1: "Child 2"    → Display child 2's tasks  
+Column 2: "Weather"    → Display weather information
+Column 3: "Family"     → Display shared family tasks
+```
+
+#### Title Display Sequence
+1. **Select button pressed** → Cycle to next column
+2. **Show title** on screen 1 of row for 2000ms
+3. **Transition to content** → Show actual tasks/information
+4. **Ready for next** select button press
 
 ## API Documentation
 
