@@ -30,14 +30,20 @@ SQUARE_BUTTON_SIZE = 18     # 18×18mm surface
 SQUARE_BUTTON_HOLE = 16     # 16mm mount hole
 ROUND_BUTTON_HOLE = 29      # 29mm mount hole
 
-# Layout parameters
+# Layout parameters - REDESIGNED COMPACT LAYOUT
 DISPLAYS_PER_ROW = 4
 ROWS = 2
 DISPLAY_SPACING = 5         # Gap between displays
-ROW_SPACING = 109          # Gap between rows (increased to fit buttons)
 
-# Margins (moved displays left)
-MARGIN_LEFT = 15           # Reduced from 25 to make room for buttons
+# Redesigned vertical positions: B-D-S-D-B
+BUTTONS_ROW1_Y = 25      # Top buttons row
+DISPLAYS_ROW1_Y = 50     # First display row
+SELECT_BUTTONS_Y = 90    # Select buttons between rows
+DISPLAYS_ROW2_Y = 115    # Second display row
+BUTTONS_ROW2_Y = 150     # Bottom buttons row
+
+# Margins  
+MARGIN_LEFT = 15
 MARGIN_TOP = 30
 
 def create_template():
@@ -51,9 +57,9 @@ def create_template():
     ax.invert_yaxis()  # Flip Y axis to match typical page layout
     
     # Title
-    ax.text(A4_WIDTH/2, 15, 'ChoreTracker A4 Template - CORRECTED DIMENSIONS', 
+    ax.text(A4_WIDTH/2, 15, 'ChoreTracker A4 Template - REDESIGNED COMPACT LAYOUT', 
             ha='center', va='center', fontsize=14, fontweight='bold')
-    ax.text(A4_WIDTH/2, 25, 'Displays moved left for button clearance - Pin holes for back connectors', 
+    ax.text(A4_WIDTH/2, 25, 'Layout: Buttons-Displays-Select-Displays-Buttons (B-D-S-D-B)', 
             ha='center', va='center', fontsize=10)
     
     # Calculate total width needed
@@ -69,14 +75,18 @@ def create_template():
     print(f"Available A4 width: {A4_WIDTH}mm")
     print(f"Remaining margin space: {A4_WIDTH - total_width - 2*MARGIN_LEFT}mm")
     
-    # Draw displays and components
+    # Draw displays and components - REDESIGNED LAYOUT
     for row in range(ROWS):
         for col in range(DISPLAYS_PER_ROW):
             display_num = row * DISPLAYS_PER_ROW + col
             
-            # Calculate position
+            # Calculate position with new layout
             x = MARGIN_LEFT + col * (DISPLAY_WIDTH + DISPLAY_SPACING)
-            y = MARGIN_TOP + row * (DISPLAY_HEIGHT + ROW_SPACING)
+            # Use new fixed positions for each row
+            if row == 0:
+                y = DISPLAYS_ROW1_Y
+            else:
+                y = DISPLAYS_ROW2_Y
             
             # Draw TFT display
             display_rect = Rectangle((x, y), DISPLAY_WIDTH, DISPLAY_HEIGHT,
@@ -113,9 +123,13 @@ def create_template():
                 pin_hole = Circle((px, py), 1.5, linewidth=2, edgecolor='green', facecolor='white')
                 ax.add_patch(pin_hole)
             
-            # Task button (square button with round mount hole)
-            button_y = y + DISPLAY_HEIGHT + 15
+            # Task button (square button with round mount hole) - NEW POSITIONS
             button_x = x + DISPLAY_WIDTH/2 - SQUARE_BUTTON_SIZE/2
+            # Buttons now at fixed positions: row 1 buttons above, row 2 buttons below
+            if row == 0:
+                button_y = BUTTONS_ROW1_Y
+            else:
+                button_y = BUTTONS_ROW2_Y
             
             # Button surface (18×18mm)
             button_rect = Rectangle((button_x, button_y), SQUARE_BUTTON_SIZE, SQUARE_BUTTON_SIZE,
@@ -140,27 +154,38 @@ def create_template():
                 # Display height dimension  
                 add_dimension_line(ax, x-10, y, x-10, y+DISPLAY_HEIGHT, f'{DISPLAY_HEIGHT}mm', rotation=90)
     
-    # Row select buttons (round buttons, now with more space)
-    select_button_x = MARGIN_LEFT + total_width + 20  # More space now
+    # Row select buttons - REPOSITIONED BETWEEN DISPLAY ROWS
+    # Position at screen 1 (column 0) and screen 4 (column 3) positions
+    select_button1_x = MARGIN_LEFT + DISPLAY_WIDTH/2  # Screen 1 position 
+    select_button2_x = MARGIN_LEFT + 3 * (DISPLAY_WIDTH + DISPLAY_SPACING) + DISPLAY_WIDTH/2  # Screen 4 position
     
-    for row in range(ROWS):
-        select_y = MARGIN_TOP + row * (DISPLAY_HEIGHT + ROW_SPACING) + DISPLAY_HEIGHT/2
-        
-        # Round select button (29mm hole)
-        select_button = Circle((select_button_x, select_y), ROUND_BUTTON_HOLE/2,
-                             linewidth=3, edgecolor='orange', facecolor='white')
-        ax.add_patch(select_button)
-        
-        # Mount hole outline
-        mount_outline = Circle((select_button_x, select_y), ROUND_BUTTON_HOLE/2,
-                             linewidth=1, edgecolor='orange', facecolor='none', linestyle='--')
-        ax.add_patch(mount_outline)
-        
-        # Label
-        ax.text(select_button_x, select_y, f'R{row+1}',
-               ha='center', va='center', fontweight='bold', fontsize=10)
-        ax.text(select_button_x, select_y + ROUND_BUTTON_HOLE/2 + 8, f'{ROUND_BUTTON_HOLE}mm hole',
-               ha='center', va='center', fontsize=8)
+    # Row 1 select button (at screen 1 position)
+    select_button = Circle((select_button1_x, SELECT_BUTTONS_Y), ROUND_BUTTON_HOLE/2,
+                         linewidth=3, edgecolor='orange', facecolor='white')
+    ax.add_patch(select_button)
+    
+    mount_outline = Circle((select_button1_x, SELECT_BUTTONS_Y), ROUND_BUTTON_HOLE/2,
+                         linewidth=1, edgecolor='orange', facecolor='none', linestyle='--')
+    ax.add_patch(mount_outline)
+    
+    ax.text(select_button1_x, SELECT_BUTTONS_Y, 'R1',
+           ha='center', va='center', fontweight='bold', fontsize=10)
+    ax.text(select_button1_x, SELECT_BUTTONS_Y + ROUND_BUTTON_HOLE/2 + 8, f'{ROUND_BUTTON_HOLE}mm hole',
+           ha='center', va='center', fontsize=8)
+    
+    # Row 2 select button (at screen 4 position)
+    select_button = Circle((select_button2_x, SELECT_BUTTONS_Y), ROUND_BUTTON_HOLE/2,
+                         linewidth=3, edgecolor='orange', facecolor='white')
+    ax.add_patch(select_button)
+    
+    mount_outline = Circle((select_button2_x, SELECT_BUTTONS_Y), ROUND_BUTTON_HOLE/2,
+                         linewidth=1, edgecolor='orange', facecolor='none', linestyle='--')
+    ax.add_patch(mount_outline)
+    
+    ax.text(select_button2_x, SELECT_BUTTONS_Y, 'R2',
+           ha='center', va='center', fontweight='bold', fontsize=10)
+    ax.text(select_button2_x, SELECT_BUTTONS_Y + ROUND_BUTTON_HOLE/2 + 8, f'{ROUND_BUTTON_HOLE}mm hole',
+           ha='center', va='center', fontsize=8)
     
     # Legend
     legend_x = 15
@@ -209,7 +234,7 @@ def create_template():
     
     # Print instructions
     ax.text(10, A4_HEIGHT - 5, 
-           'Print at 100% scale on A4 landscape. Pin holes for back connectors. Verify: displays = 57.9×29.0mm',
+           'Print at 100% scale on A4 landscape. REDESIGNED: B-D-S-D-B compact layout. Verify: displays = 57.9×29.0mm',
            fontsize=10, style='italic')
     
     # Remove axes
@@ -235,7 +260,7 @@ def add_dimension_line(ax, x1, y1, x2, y2, text, rotation=0):
 
 def main():
     """Generate the corrected template."""
-    print("Generating ChoreTracker A4 Template with CORRECTED layout...")
+    print("Generating ChoreTracker A4 Template with REDESIGNED compact layout...")
     
     # Generate PNG version
     fig, ax = create_template()
