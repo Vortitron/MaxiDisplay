@@ -9,144 +9,159 @@
     ChoreTracker A4 Template - CORRECTED DIMENSIONS (57.9×29.0mm)
   </text>
   
-  <!-- Row 1 - Displays 0-3 (Y=30) -->
+  <!-- Row 1 - Displays 0-3 (Y=30, moved left) -->
   
-  <!-- Display 0 - Position X=25 -->
+  <!-- Display 0 - Position X=15 (moved left) -->
   <g id="display0">
-    <rect x="25" y="30" width="57.9" height="29" fill="white" stroke="blue" stroke-width="2"/>
-    <text x="53.95" y="47" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">D0</text>
+    <rect x="15" y="30" width="57.9" height="29" fill="white" stroke="blue" stroke-width="2"/>
+    <text x="43.95" y="47" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">D0</text>
     <!-- Mounting holes (1.5mm from edges) -->
-    <circle cx="26.5" cy="31.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="81.4" cy="31.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="26.5" cy="57.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="81.4" cy="57.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <!-- Wire holes -->
-    <circle cx="53.95" cy="64" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
-    <circle cx="57.45" cy="64" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <circle cx="16.5" cy="31.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="71.4" cy="31.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="16.5" cy="57.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="71.4" cy="57.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <!-- Pin holes (left side, back connector) -->
+    <circle cx="10" cy="41" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <circle cx="10" cy="44" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <circle cx="10" cy="47" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
     <!-- Task button (18×18mm, 16mm hole) -->
-    <rect x="44.95" y="72" width="18" height="18" fill="white" stroke="purple" stroke-width="2"/>
-    <circle cx="53.95" cy="81" r="8" fill="none" stroke="purple" stroke-width="1" stroke-dasharray="2,2"/>
-    <text x="53.95" y="84" text-anchor="middle" font-family="Arial" font-size="6">B0</text>
+    <rect x="34.95" y="72" width="18" height="18" fill="white" stroke="purple" stroke-width="2"/>
+    <circle cx="43.95" cy="81" r="8" fill="none" stroke="purple" stroke-width="1" stroke-dasharray="2,2"/>
+    <text x="43.95" y="84" text-anchor="middle" font-family="Arial" font-size="6">B0</text>
   </g>
   
-  <!-- Display 1 - Position X=87.9 -->
+  <!-- Display 1 - Position X=77.9 (moved left) -->
   <g id="display1">
-    <rect x="87.9" y="30" width="57.9" height="29" fill="white" stroke="blue" stroke-width="2"/>
-    <text x="116.85" y="47" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">D1</text>
-    <circle cx="89.4" cy="31.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="144.3" cy="31.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="89.4" cy="57.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="144.3" cy="57.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="116.85" cy="64" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
-    <circle cx="120.35" cy="64" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
-    <rect x="107.85" y="72" width="18" height="18" fill="white" stroke="purple" stroke-width="2"/>
-    <circle cx="116.85" cy="81" r="8" fill="none" stroke="purple" stroke-width="1" stroke-dasharray="2,2"/>
-    <text x="116.85" y="84" text-anchor="middle" font-family="Arial" font-size="6">B1</text>
+    <rect x="77.9" y="30" width="57.9" height="29" fill="white" stroke="blue" stroke-width="2"/>
+    <text x="106.85" y="47" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">D1</text>
+    <circle cx="79.4" cy="31.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="134.3" cy="31.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="79.4" cy="57.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="134.3" cy="57.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <!-- Pin holes (left side, back connector) -->
+    <circle cx="72.9" cy="41" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <circle cx="72.9" cy="44" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <circle cx="72.9" cy="47" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <rect x="97.85" y="72" width="18" height="18" fill="white" stroke="purple" stroke-width="2"/>
+    <circle cx="106.85" cy="81" r="8" fill="none" stroke="purple" stroke-width="1" stroke-dasharray="2,2"/>
+    <text x="106.85" y="84" text-anchor="middle" font-family="Arial" font-size="6">B1</text>
   </g>
   
-  <!-- Display 2 - Position X=150.8 -->
+  <!-- Display 2 - Position X=140.8 (moved left) -->
   <g id="display2">
-    <rect x="150.8" y="30" width="57.9" height="29" fill="white" stroke="blue" stroke-width="2"/>
-    <text x="179.75" y="47" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">D2</text>
-    <circle cx="152.3" cy="31.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="207.2" cy="31.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="152.3" cy="57.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="207.2" cy="57.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="179.75" cy="64" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
-    <circle cx="183.25" cy="64" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
-    <rect x="170.75" y="72" width="18" height="18" fill="white" stroke="purple" stroke-width="2"/>
-    <circle cx="179.75" cy="81" r="8" fill="none" stroke="purple" stroke-width="1" stroke-dasharray="2,2"/>
-    <text x="179.75" y="84" text-anchor="middle" font-family="Arial" font-size="6">B2</text>
+    <rect x="140.8" y="30" width="57.9" height="29" fill="white" stroke="blue" stroke-width="2"/>
+    <text x="169.75" y="47" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">D2</text>
+    <circle cx="142.3" cy="31.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="197.2" cy="31.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="142.3" cy="57.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="197.2" cy="57.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <!-- Pin holes (left side, back connector) -->
+    <circle cx="135.8" cy="41" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <circle cx="135.8" cy="44" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <circle cx="135.8" cy="47" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <rect x="160.75" y="72" width="18" height="18" fill="white" stroke="purple" stroke-width="2"/>
+    <circle cx="169.75" cy="81" r="8" fill="none" stroke="purple" stroke-width="1" stroke-dasharray="2,2"/>
+    <text x="169.75" y="84" text-anchor="middle" font-family="Arial" font-size="6">B2</text>
   </g>
   
-  <!-- Display 3 - Position X=213.7 -->
+  <!-- Display 3 - Position X=203.7 (moved left) -->
   <g id="display3">
-    <rect x="213.7" y="30" width="57.9" height="29" fill="white" stroke="blue" stroke-width="2"/>
-    <text x="242.65" y="47" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">D3</text>
-    <circle cx="215.2" cy="31.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="270.1" cy="31.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="215.2" cy="57.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="270.1" cy="57.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="242.65" cy="64" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
-    <circle cx="246.15" cy="64" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
-    <rect x="233.65" y="72" width="18" height="18" fill="white" stroke="purple" stroke-width="2"/>
-    <circle cx="242.65" cy="81" r="8" fill="none" stroke="purple" stroke-width="1" stroke-dasharray="2,2"/>
-    <text x="242.65" y="84" text-anchor="middle" font-family="Arial" font-size="6">B3</text>
+    <rect x="203.7" y="30" width="57.9" height="29" fill="white" stroke="blue" stroke-width="2"/>
+    <text x="232.65" y="47" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">D3</text>
+    <circle cx="205.2" cy="31.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="260.1" cy="31.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="205.2" cy="57.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="260.1" cy="57.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <!-- Pin holes (left side, back connector) -->
+    <circle cx="198.7" cy="41" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <circle cx="198.7" cy="44" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <circle cx="198.7" cy="47" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <rect x="223.65" y="72" width="18" height="18" fill="white" stroke="purple" stroke-width="2"/>
+    <circle cx="232.65" cy="81" r="8" fill="none" stroke="purple" stroke-width="1" stroke-dasharray="2,2"/>
+    <text x="232.65" y="84" text-anchor="middle" font-family="Arial" font-size="6">B3</text>
   </g>
   
-  <!-- Row 1 Select Button (29mm hole) -->
-  <circle cx="280" cy="44.5" r="14.5" fill="white" stroke="orange" stroke-width="3"/>
-  <circle cx="280" cy="44.5" r="14.5" fill="none" stroke="orange" stroke-width="1" stroke-dasharray="3,3"/>
-  <text x="280" y="48" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">R1</text>
-  <text x="280" y="62" text-anchor="middle" font-family="Arial" font-size="5">29mm hole</text>
+  <!-- Row 1 Select Button (29mm hole, more space now) -->
+  <circle cx="275" cy="44.5" r="14.5" fill="white" stroke="orange" stroke-width="3"/>
+  <circle cx="275" cy="44.5" r="14.5" fill="none" stroke="orange" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="275" y="48" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">R1</text>
+  <text x="275" y="62" text-anchor="middle" font-family="Arial" font-size="5">29mm hole</text>
   
-  <!-- Row 2 - Displays 4-7 (Y=139) -->
+  <!-- Row 2 - Displays 4-7 (Y=139, moved left) -->
   
-  <!-- Display 4 - Position X=25 -->
+  <!-- Display 4 - Position X=15 (moved left) -->
   <g id="display4">
-    <rect x="25" y="139" width="57.9" height="29" fill="white" stroke="blue" stroke-width="2"/>
-    <text x="53.95" y="156" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">D4</text>
-    <circle cx="26.5" cy="140.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="81.4" cy="140.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="26.5" cy="166.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="81.4" cy="166.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="53.95" cy="173" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
-    <circle cx="57.45" cy="173" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
-    <rect x="44.95" y="181" width="18" height="18" fill="white" stroke="purple" stroke-width="2"/>
-    <circle cx="53.95" cy="190" r="8" fill="none" stroke="purple" stroke-width="1" stroke-dasharray="2,2"/>
-    <text x="53.95" y="193" text-anchor="middle" font-family="Arial" font-size="6">B4</text>
+    <rect x="15" y="139" width="57.9" height="29" fill="white" stroke="blue" stroke-width="2"/>
+    <text x="43.95" y="156" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">D4</text>
+    <circle cx="16.5" cy="140.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="71.4" cy="140.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="16.5" cy="166.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="71.4" cy="166.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <!-- Pin holes (left side, back connector) -->
+    <circle cx="10" cy="150" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <circle cx="10" cy="153" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <circle cx="10" cy="156" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <rect x="34.95" y="181" width="18" height="18" fill="white" stroke="purple" stroke-width="2"/>
+    <circle cx="43.95" cy="190" r="8" fill="none" stroke="purple" stroke-width="1" stroke-dasharray="2,2"/>
+    <text x="43.95" y="193" text-anchor="middle" font-family="Arial" font-size="6">B4</text>
   </g>
   
-  <!-- Display 5 - Position X=87.9 -->
+  <!-- Display 5 - Position X=77.9 (moved left) -->
   <g id="display5">
-    <rect x="87.9" y="139" width="57.9" height="29" fill="white" stroke="blue" stroke-width="2"/>
-    <text x="116.85" y="156" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">D5</text>
-    <circle cx="89.4" cy="140.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="144.3" cy="140.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="89.4" cy="166.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="144.3" cy="166.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="116.85" cy="173" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
-    <circle cx="120.35" cy="173" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
-    <rect x="107.85" y="181" width="18" height="18" fill="white" stroke="purple" stroke-width="2"/>
-    <circle cx="116.85" cy="190" r="8" fill="none" stroke="purple" stroke-width="1" stroke-dasharray="2,2"/>
-    <text x="116.85" y="193" text-anchor="middle" font-family="Arial" font-size="6">B5</text>
+    <rect x="77.9" y="139" width="57.9" height="29" fill="white" stroke="blue" stroke-width="2"/>
+    <text x="106.85" y="156" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">D5</text>
+    <circle cx="79.4" cy="140.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="134.3" cy="140.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="79.4" cy="166.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="134.3" cy="166.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <!-- Pin holes (left side, back connector) -->
+    <circle cx="72.9" cy="150" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <circle cx="72.9" cy="153" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <circle cx="72.9" cy="156" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <rect x="97.85" y="181" width="18" height="18" fill="white" stroke="purple" stroke-width="2"/>
+    <circle cx="106.85" cy="190" r="8" fill="none" stroke="purple" stroke-width="1" stroke-dasharray="2,2"/>
+    <text x="106.85" y="193" text-anchor="middle" font-family="Arial" font-size="6">B5</text>
   </g>
   
-  <!-- Display 6 - Position X=150.8 -->
+  <!-- Display 6 - Position X=140.8 (moved left) -->
   <g id="display6">
-    <rect x="150.8" y="139" width="57.9" height="29" fill="white" stroke="blue" stroke-width="2"/>
-    <text x="179.75" y="156" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">D6</text>
-    <circle cx="152.3" cy="140.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="207.2" cy="140.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="152.3" cy="166.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="207.2" cy="166.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="179.75" cy="173" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
-    <circle cx="183.25" cy="173" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
-    <rect x="170.75" y="181" width="18" height="18" fill="white" stroke="purple" stroke-width="2"/>
-    <circle cx="179.75" cy="190" r="8" fill="none" stroke="purple" stroke-width="1" stroke-dasharray="2,2"/>
-    <text x="179.75" y="193" text-anchor="middle" font-family="Arial" font-size="6">B6</text>
+    <rect x="140.8" y="139" width="57.9" height="29" fill="white" stroke="blue" stroke-width="2"/>
+    <text x="169.75" y="156" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">D6</text>
+    <circle cx="142.3" cy="140.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="197.2" cy="140.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="142.3" cy="166.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="197.2" cy="166.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <!-- Pin holes (left side, back connector) -->
+    <circle cx="135.8" cy="150" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <circle cx="135.8" cy="153" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <circle cx="135.8" cy="156" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <rect x="160.75" y="181" width="18" height="18" fill="white" stroke="purple" stroke-width="2"/>
+    <circle cx="169.75" cy="190" r="8" fill="none" stroke="purple" stroke-width="1" stroke-dasharray="2,2"/>
+    <text x="169.75" y="193" text-anchor="middle" font-family="Arial" font-size="6">B6</text>
   </g>
   
-  <!-- Display 7 - Position X=213.7 -->
+  <!-- Display 7 - Position X=203.7 (moved left) -->
   <g id="display7">
-    <rect x="213.7" y="139" width="57.9" height="29" fill="white" stroke="blue" stroke-width="2"/>
-    <text x="242.65" y="156" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">D7</text>
-    <circle cx="215.2" cy="140.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="270.1" cy="140.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="215.2" cy="166.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="270.1" cy="166.5" r="1" fill="white" stroke="red" stroke-width="1"/>
-    <circle cx="242.65" cy="173" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
-    <circle cx="246.15" cy="173" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
-    <rect x="233.65" y="181" width="18" height="18" fill="white" stroke="purple" stroke-width="2"/>
-    <circle cx="242.65" cy="190" r="8" fill="none" stroke="purple" stroke-width="1" stroke-dasharray="2,2"/>
-    <text x="242.65" y="193" text-anchor="middle" font-family="Arial" font-size="6">B7</text>
+    <rect x="203.7" y="139" width="57.9" height="29" fill="white" stroke="blue" stroke-width="2"/>
+    <text x="232.65" y="156" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">D7</text>
+    <circle cx="205.2" cy="140.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="260.1" cy="140.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="205.2" cy="166.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <circle cx="260.1" cy="166.5" r="1" fill="white" stroke="red" stroke-width="1"/>
+    <!-- Pin holes (left side, back connector) -->
+    <circle cx="198.7" cy="150" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <circle cx="198.7" cy="153" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <circle cx="198.7" cy="156" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
+    <rect x="223.65" y="181" width="18" height="18" fill="white" stroke="purple" stroke-width="2"/>
+    <circle cx="232.65" cy="190" r="8" fill="none" stroke="purple" stroke-width="1" stroke-dasharray="2,2"/>
+    <text x="232.65" y="193" text-anchor="middle" font-family="Arial" font-size="6">B7</text>
   </g>
   
   <!-- Row 2 Select Button -->
-  <circle cx="280" cy="153.5" r="14.5" fill="white" stroke="orange" stroke-width="3"/>
-  <circle cx="280" cy="153.5" r="14.5" fill="none" stroke="orange" stroke-width="1" stroke-dasharray="3,3"/>
-  <text x="280" y="157" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">R2</text>
-  <text x="280" y="171" text-anchor="middle" font-family="Arial" font-size="5">29mm hole</text>
+  <circle cx="275" cy="153.5" r="14.5" fill="white" stroke="orange" stroke-width="3"/>
+  <circle cx="275" cy="153.5" r="14.5" fill="none" stroke="orange" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="275" y="157" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">R2</text>
+  <text x="275" y="171" text-anchor="middle" font-family="Arial" font-size="5">29mm hole</text>
   
   <!-- Legend -->
   <g id="legend" transform="translate(15, 105)">
@@ -160,7 +175,7 @@
     
     <circle cx="10" cy="38" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
     <circle cx="14" cy="38" r="1.5" fill="white" stroke="green" stroke-width="1.5"/>
-    <text x="30" y="40" font-family="Arial" font-size="7">Wire Holes (Ø3mm)</text>
+    <text x="30" y="40" font-family="Arial" font-size="7">Pin Holes (Ø3mm, back connector)</text>
     
     <rect x="7" y="47" width="10" height="10" fill="white" stroke="purple" stroke-width="2"/>
     <circle cx="12" cy="52" r="5" fill="none" stroke="purple" stroke-width="1" stroke-dasharray="1,1"/>
@@ -174,21 +189,21 @@
   <!-- Dimensions -->
   <g id="dimensions" stroke="grey" stroke-width="0.5" fill="none" stroke-dasharray="2,2">
     <!-- Display width -->
-    <line x1="25" y1="25" x2="82.9" y2="25"/>
-    <text x="53.95" y="23" text-anchor="middle" font-family="Arial" font-size="6">57.9mm</text>
+    <line x1="15" y1="25" x2="72.9" y2="25"/>
+    <text x="43.95" y="23" text-anchor="middle" font-family="Arial" font-size="6">57.9mm</text>
     
     <!-- Display height -->
-    <line x1="20" y1="30" x2="20" y2="59"/>
-    <text x="12" y="44.5" text-anchor="middle" font-family="Arial" font-size="6" transform="rotate(-90 12 44.5)">29mm</text>
+    <line x1="10" y1="30" x2="10" y2="59"/>
+    <text x="2" y="44.5" text-anchor="middle" font-family="Arial" font-size="6" transform="rotate(-90 2 44.5)">29mm</text>
     
     <!-- Spacing between displays -->
-    <line x1="82.9" y1="22" x2="87.9" y2="22"/>
-    <text x="85.4" y="20" text-anchor="middle" font-family="Arial" font-size="5">5mm</text>
+    <line x1="72.9" y1="22" x2="77.9" y2="22"/>
+    <text x="75.4" y="20" text-anchor="middle" font-family="Arial" font-size="5">5mm</text>
   </g>
   
   <!-- Print instructions -->
   <text x="10" y="205" font-family="Arial" font-size="8" font-style="italic">
-    Print at 100% scale on A4 landscape. Verify: TFT displays should measure exactly 57.9×29.0mm
+    Print at 100% scale on A4 landscape. Pin holes are for back connectors. Verify: displays = 57.9×29.0mm
   </text>
   
 </svg> 

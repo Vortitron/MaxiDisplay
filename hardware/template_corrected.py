@@ -8,6 +8,8 @@ Corrected dimensions based on user feedback:
 - Mount holes: 1.5mm from edge  
 - Square buttons: 16mm hole
 - Round buttons: 29mm hole
+- Displays moved left for button clearance
+- Pin holes on left side for back connectors
 """
 
 import matplotlib.pyplot as plt
@@ -34,8 +36,8 @@ ROWS = 2
 DISPLAY_SPACING = 5         # Gap between displays
 ROW_SPACING = 109          # Gap between rows (increased to fit buttons)
 
-# Margins
-MARGIN_LEFT = 25
+# Margins (moved displays left)
+MARGIN_LEFT = 15           # Reduced from 25 to make room for buttons
 MARGIN_TOP = 30
 
 def create_template():
@@ -51,7 +53,7 @@ def create_template():
     # Title
     ax.text(A4_WIDTH/2, 15, 'ChoreTracker A4 Template - CORRECTED DIMENSIONS', 
             ha='center', va='center', fontsize=14, fontweight='bold')
-    ax.text(A4_WIDTH/2, 25, 'TFT Displays: 57.9×29.0mm | Buttons: 16mm & 29mm holes', 
+    ax.text(A4_WIDTH/2, 25, 'Displays moved left for button clearance - Pin holes for back connectors', 
             ha='center', va='center', fontsize=10)
     
     # Calculate total width needed
@@ -98,18 +100,21 @@ def create_template():
                 hole = Circle((hx, hy), 1, linewidth=1, edgecolor='red', facecolor='white')
                 ax.add_patch(hole)
             
-            # Wire holes (below display)
-            wire_y = y + DISPLAY_HEIGHT + 5
-            wire_x1 = x + DISPLAY_WIDTH/2 - 2
-            wire_x2 = x + DISPLAY_WIDTH/2 + 2
+            # Pin holes (left side of display for back connector)
+            pin_x = x - 5  # 5mm to the left of display
+            pin_y_center = y + DISPLAY_HEIGHT/2
+            pin_positions = [
+                (pin_x, pin_y_center - 3),  # Top pin
+                (pin_x, pin_y_center),      # Middle pin
+                (pin_x, pin_y_center + 3)   # Bottom pin
+            ]
             
-            wire_hole1 = Circle((wire_x1, wire_y), 1.5, linewidth=2, edgecolor='green', facecolor='white')
-            wire_hole2 = Circle((wire_x2, wire_y), 1.5, linewidth=2, edgecolor='green', facecolor='white')
-            ax.add_patch(wire_hole1)
-            ax.add_patch(wire_hole2)
+            for px, py in pin_positions:
+                pin_hole = Circle((px, py), 1.5, linewidth=2, edgecolor='green', facecolor='white')
+                ax.add_patch(pin_hole)
             
             # Task button (square button with round mount hole)
-            button_y = wire_y + 10
+            button_y = y + DISPLAY_HEIGHT + 15
             button_x = x + DISPLAY_WIDTH/2 - SQUARE_BUTTON_SIZE/2
             
             # Button surface (18×18mm)
@@ -133,10 +138,10 @@ def create_template():
                 # Display width dimension
                 add_dimension_line(ax, x, y-5, x+DISPLAY_WIDTH, y-5, f'{DISPLAY_WIDTH}mm')
                 # Display height dimension  
-                add_dimension_line(ax, x-5, y, x-5, y+DISPLAY_HEIGHT, f'{DISPLAY_HEIGHT}mm', rotation=90)
+                add_dimension_line(ax, x-10, y, x-10, y+DISPLAY_HEIGHT, f'{DISPLAY_HEIGHT}mm', rotation=90)
     
-    # Row select buttons (round buttons)
-    select_button_x = MARGIN_LEFT + total_width + 15
+    # Row select buttons (round buttons, now with more space)
+    select_button_x = MARGIN_LEFT + total_width + 20  # More space now
     
     for row in range(ROWS):
         select_y = MARGIN_TOP + row * (DISPLAY_HEIGHT + ROW_SPACING) + DISPLAY_HEIGHT/2
@@ -175,14 +180,14 @@ def create_template():
     ax.add_patch(legend_hole)
     ax.text(legend_x + 30, legend_y + 25, 'Mount Hole (Ø2mm, 1.5mm from edge)', fontsize=9)
     
-    # Wire hole legend
-    wire_legend1 = Circle((legend_x + 10, legend_y + 38), 1.5, 
+    # Pin hole legend (updated text)
+    pin_legend1 = Circle((legend_x + 10, legend_y + 38), 1.5, 
                          linewidth=2, edgecolor='green', facecolor='white')
-    wire_legend2 = Circle((legend_x + 14, legend_y + 38), 1.5, 
+    pin_legend2 = Circle((legend_x + 14, legend_y + 38), 1.5, 
                          linewidth=2, edgecolor='green', facecolor='white')
-    ax.add_patch(wire_legend1)
-    ax.add_patch(wire_legend2)
-    ax.text(legend_x + 30, legend_y + 38, 'Wire Holes (Ø3mm)', fontsize=9)
+    ax.add_patch(pin_legend1)
+    ax.add_patch(pin_legend2)
+    ax.text(legend_x + 30, legend_y + 38, 'Pin Holes (Ø3mm, back connector)', fontsize=9)
     
     # Square button legend
     button_legend_rect = Rectangle((legend_x + 7, legend_y + 47), 10, 10,
@@ -204,7 +209,7 @@ def create_template():
     
     # Print instructions
     ax.text(10, A4_HEIGHT - 5, 
-           'Print at 100% scale on A4 landscape. Verify: TFT displays should measure exactly 57.9×29.0mm',
+           'Print at 100% scale on A4 landscape. Pin holes for back connectors. Verify: displays = 57.9×29.0mm',
            fontsize=10, style='italic')
     
     # Remove axes
@@ -230,7 +235,7 @@ def add_dimension_line(ax, x1, y1, x2, y2, text, rotation=0):
 
 def main():
     """Generate the corrected template."""
-    print("Generating ChoreTracker A4 Template with CORRECTED dimensions...")
+    print("Generating ChoreTracker A4 Template with CORRECTED layout...")
     
     # Generate PNG version
     fig, ax = create_template()
@@ -247,13 +252,16 @@ def main():
     print("="*60)
     print(f"TFT Display Size: {DISPLAY_WIDTH} × {DISPLAY_HEIGHT}mm")
     print(f"Mount Holes: 1.5mm from display edges")
+    print(f"Pin Holes: Left side for back connectors (Ø3mm)")
     print(f"Square Button: 18×18mm surface, {SQUARE_BUTTON_HOLE}mm mount hole") 
     print(f"Round Button: Ø{ROUND_BUTTON_HOLE}mm mount hole")
+    print(f"Layout: Displays moved left for button clearance")
     print("="*60)
     print("Usage:")
     print("1. Print at 100% scale on A4 landscape")
     print(f"2. Verify first display measures exactly {DISPLAY_WIDTH}×{DISPLAY_HEIGHT}mm")
-    print("3. Use as template for cutting and drilling")
+    print("3. Pin holes are for back-side connectors")
+    print("4. Use as template for cutting and drilling")
     print("="*60)
 
 if __name__ == "__main__":
