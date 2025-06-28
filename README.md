@@ -84,7 +84,7 @@ ESP32 Pin Configuration:
 ├── Task LEDs (Output):       15, 2, 0, 4, 5, 25, 32, 21     # 8 independent LEDs
 ├── Row Select (Input):       17, 22                          # 2 momentary navigation buttons
 ├── TFT CS (Output):          9, 10, 1, 3, 39, 36, 37, 38    # 8 display CS pins
-├── TFT Shared:               SCK(18), MOSI(23), DC(19), RST(-1)
+├── TFT Shared:               SCL(18), SDA(23), DC(19), RES(Reset)
 ├── TFT Backlight:            8 (all displays)
 └── Spare:                    11, 16, 7 (buzzer, expansion)
 ```

@@ -38,11 +38,11 @@
 #define ROW_2_DISPLAYS {4, 5, 6, 7}  // Screen indices for row 2
 
 // TFT Shared Pins (all displays)
-#define TFT_SCK 18       // SPI Clock
-#define TFT_MOSI 23      // SPI MOSI
-#define TFT_DC 19        // Data/Command
-#define TFT_RST -1       // Connected to ESP32 reset pin
-#define TFT_BL 8         // Backlight control (all displays)
+#define TFT_SCK 18       // SPI Clock (connect to TFT SCL pins)
+#define TFT_MOSI 23      // SPI Data (connect to TFT SDA pins)
+#define TFT_DC 19        // Data/Command (connect to TFT DC pins)
+#define TFT_RST -1       // Connected to ESP32 reset pin (connect to TFT RES pins)
+#define TFT_BL 8         // Backlight control (connect to TFT BLK pins)
 
 // ==============================================
 // Navigation Logic Configuration
