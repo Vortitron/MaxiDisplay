@@ -1,197 +1,260 @@
+#!/usr/bin/env python3
+"""
+ChoreTracker A4 Template Generator (Corrected Dimensions)
+Generates both PNG and SVG templates for physical construction.
+
+Corrected dimensions based on user feedback:
+- TFT Display: 57.9mm × 29.0mm 
+- Mount holes: 1.5mm from edge  
+- Square buttons: 16mm hole
+- Round buttons: 29mm hole
+"""
+
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+from matplotlib.patches import Rectangle, Circle
 import numpy as np
 
-# Set up the figure (A4 landscape in mm, converted to inches for matplotlib)
-fig = plt.figure(figsize=(11.69, 8.27))  # 297 mm x 210 mm in inches
-ax = fig.add_subplot(111)
-ax.set_aspect('equal')
+# A4 dimensions in mm
+A4_WIDTH = 297
+A4_HEIGHT = 210
 
-# Set limits in mm
-ax.set_xlim(0, 297)
-ax.set_ylim(0, 210)
-ax.set_xlabel('Width (mm)')
-ax.set_ylabel('Height (mm)')
-ax.grid(True, alpha=0.3)
+# Corrected component dimensions
+DISPLAY_WIDTH = 57.9    # Corrected from 29mm 
+DISPLAY_HEIGHT = 29.0   # Corrected from 25.8mm
 
-# CORRECTED dimensions from user specifications (in mm)
-display_width, display_height = 29, 25.8  # TFT displays (landscape orientation)
-square_button_size = 18  # Top surface of square button
-square_mount_hole = 16  # Mounting hole for square button
-round_button_diameter = 33  # Round select button diameter
-mount_hole_size = 2  # Display mounting holes
-wire_hole_size = 3  # Wire holes
+# Button dimensions  
+SQUARE_BUTTON_SIZE = 18     # 18×18mm surface
+SQUARE_BUTTON_HOLE = 16     # 16mm mount hole
+ROUND_BUTTON_HOLE = 29      # 29mm mount hole
 
 # Layout parameters
-horizontal_spacing = 16  # Space between display centres minus display width
-vertical_spacing = 90  # Centre-to-centre spacing between rows
-start_x = 30  # Left margin
-row1_y = 40  # First row Y position
-row2_y = row1_y + vertical_spacing  # Second row Y position
+DISPLAYS_PER_ROW = 4
+ROWS = 2
+DISPLAY_SPACING = 5         # Gap between displays
+ROW_SPACING = 109          # Gap between rows (increased to fit buttons)
 
-# Button and select button positions
-button_offset_y = 40  # Distance below display for task buttons
-select_button_x = 220  # X position for row select buttons
+# Margins
+MARGIN_LEFT = 25
+MARGIN_TOP = 30
 
-# Colors for different elements
-display_color = 'blue'
-mount_color = 'red'
-wire_color = 'green'
-button_color = 'purple'
-select_color = 'orange'
-
-# Draw all 8 displays in 2×4 grid
-displays_per_row = 4
-display_labels = ['D0', 'D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7']
-button_labels = ['B0', 'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7']
-
-for i in range(8):
-    # Calculate position for each display
-    col = i % displays_per_row
-    row = i // displays_per_row
+def create_template():
+    """Create the ChoreTracker template with corrected dimensions."""
     
-    x = start_x + col * (display_width + horizontal_spacing)
-    y = row1_y if row == 0 else row2_y
+    # Create figure with A4 dimensions
+    fig, ax = plt.subplots(1, 1, figsize=(A4_WIDTH/25.4, A4_HEIGHT/25.4))
+    ax.set_xlim(0, A4_WIDTH)
+    ax.set_ylim(0, A4_HEIGHT)
+    ax.set_aspect('equal')
+    ax.invert_yaxis()  # Flip Y axis to match typical page layout
     
-    # Draw display rectangle (29mm × 25.8mm in landscape)
-    display_rect = plt.Rectangle((x, y), display_width, display_height, 
-                                fill=False, edgecolor=display_color, linewidth=2)
-    ax.add_patch(display_rect)
+    # Title
+    ax.text(A4_WIDTH/2, 15, 'ChoreTracker A4 Template - CORRECTED DIMENSIONS', 
+            ha='center', va='center', fontsize=14, fontweight='bold')
+    ax.text(A4_WIDTH/2, 25, 'TFT Displays: 57.9×29.0mm | Buttons: 16mm & 29mm holes', 
+            ha='center', va='center', fontsize=10)
     
-    # Add display label in centre
-    ax.text(x + display_width/2, y + display_height/2, display_labels[i],
-            ha='center', va='center', fontsize=10, fontweight='bold')
+    # Calculate total width needed
+    total_display_width = DISPLAYS_PER_ROW * DISPLAY_WIDTH
+    total_spacing = (DISPLAYS_PER_ROW - 1) * DISPLAY_SPACING
+    total_width = total_display_width + total_spacing
     
-    # Draw mounting holes at corners (2mm diameter)
-    corner_offset = 2
-    corners = [(x + corner_offset, y + corner_offset),
-               (x + display_width - corner_offset, y + corner_offset),
-               (x + corner_offset, y + display_height - corner_offset),
-               (x + display_width - corner_offset, y + display_height - corner_offset)]
+    print(f"Layout calculations:")
+    print(f"Display width: {DISPLAY_WIDTH}mm")
+    print(f"Total display width: {total_display_width}mm")
+    print(f"Total spacing: {total_spacing}mm")
+    print(f"Total layout width: {total_width}mm")
+    print(f"Available A4 width: {A4_WIDTH}mm")
+    print(f"Remaining margin space: {A4_WIDTH - total_width - 2*MARGIN_LEFT}mm")
     
-    for corner_x, corner_y in corners:
-        mount_hole = plt.Circle((corner_x, corner_y), mount_hole_size/2, 
-                               fill=False, edgecolor=mount_color, linewidth=1)
-        ax.add_patch(mount_hole)
+    # Draw displays and components
+    for row in range(ROWS):
+        for col in range(DISPLAYS_PER_ROW):
+            display_num = row * DISPLAYS_PER_ROW + col
+            
+            # Calculate position
+            x = MARGIN_LEFT + col * (DISPLAY_WIDTH + DISPLAY_SPACING)
+            y = MARGIN_TOP + row * (DISPLAY_HEIGHT + ROW_SPACING)
+            
+            # Draw TFT display
+            display_rect = Rectangle((x, y), DISPLAY_WIDTH, DISPLAY_HEIGHT,
+                                   linewidth=2, edgecolor='blue', facecolor='lightblue', alpha=0.7)
+            ax.add_patch(display_rect)
+            
+            # Display label
+            ax.text(x + DISPLAY_WIDTH/2, y + DISPLAY_HEIGHT/2, f'D{display_num}',
+                   ha='center', va='center', fontweight='bold', fontsize=10)
+            
+            # Mounting holes (1.5mm from edges)
+            hole_inset = 1.5
+            hole_positions = [
+                (x + hole_inset, y + hole_inset),                                    # Top-left
+                (x + DISPLAY_WIDTH - hole_inset, y + hole_inset),                   # Top-right  
+                (x + hole_inset, y + DISPLAY_HEIGHT - hole_inset),                 # Bottom-left
+                (x + DISPLAY_WIDTH - hole_inset, y + DISPLAY_HEIGHT - hole_inset)  # Bottom-right
+            ]
+            
+            for hx, hy in hole_positions:
+                hole = Circle((hx, hy), 1, linewidth=1, edgecolor='red', facecolor='white')
+                ax.add_patch(hole)
+            
+            # Wire holes (below display)
+            wire_y = y + DISPLAY_HEIGHT + 5
+            wire_x1 = x + DISPLAY_WIDTH/2 - 2
+            wire_x2 = x + DISPLAY_WIDTH/2 + 2
+            
+            wire_hole1 = Circle((wire_x1, wire_y), 1.5, linewidth=2, edgecolor='green', facecolor='white')
+            wire_hole2 = Circle((wire_x2, wire_y), 1.5, linewidth=2, edgecolor='green', facecolor='white')
+            ax.add_patch(wire_hole1)
+            ax.add_patch(wire_hole2)
+            
+            # Task button (square button with round mount hole)
+            button_y = wire_y + 10
+            button_x = x + DISPLAY_WIDTH/2 - SQUARE_BUTTON_SIZE/2
+            
+            # Button surface (18×18mm)
+            button_rect = Rectangle((button_x, button_y), SQUARE_BUTTON_SIZE, SQUARE_BUTTON_SIZE,
+                                  linewidth=2, edgecolor='purple', facecolor='white')
+            ax.add_patch(button_rect)
+            
+            # Mount hole (16mm diameter)
+            button_center_x = x + DISPLAY_WIDTH/2
+            button_center_y = button_y + SQUARE_BUTTON_SIZE/2
+            mount_hole = Circle((button_center_x, button_center_y), SQUARE_BUTTON_HOLE/2,
+                              linewidth=1, edgecolor='purple', facecolor='none', linestyle='--')
+            ax.add_patch(mount_hole)
+            
+            # Button label
+            ax.text(button_center_x, button_center_y, f'B{display_num}',
+                   ha='center', va='center', fontsize=8)
+            
+            # Add dimensions for first display
+            if display_num == 0:
+                # Display width dimension
+                add_dimension_line(ax, x, y-5, x+DISPLAY_WIDTH, y-5, f'{DISPLAY_WIDTH}mm')
+                # Display height dimension  
+                add_dimension_line(ax, x-5, y, x-5, y+DISPLAY_HEIGHT, f'{DISPLAY_HEIGHT}mm', rotation=90)
     
-    # Draw wire holes below display (3mm diameter, two holes)
-    wire_y = y + display_height + 5
-    wire1 = plt.Circle((x + display_width/2 - 1.5, wire_y), wire_hole_size/2,
-                      fill=False, edgecolor=wire_color, linewidth=1.5)
-    wire2 = plt.Circle((x + display_width/2 + 1.5, wire_y), wire_hole_size/2,
-                      fill=False, edgecolor=wire_color, linewidth=1.5)
-    ax.add_patch(wire1)
-    ax.add_patch(wire2)
+    # Row select buttons (round buttons)
+    select_button_x = MARGIN_LEFT + total_width + 15
     
-    # Draw task button below wire holes (18×18mm with 16mm mount hole)
-    button_y = wire_y + 10
-    button_x = x + (display_width - square_button_size)/2
+    for row in range(ROWS):
+        select_y = MARGIN_TOP + row * (DISPLAY_HEIGHT + ROW_SPACING) + DISPLAY_HEIGHT/2
+        
+        # Round select button (29mm hole)
+        select_button = Circle((select_button_x, select_y), ROUND_BUTTON_HOLE/2,
+                             linewidth=3, edgecolor='orange', facecolor='white')
+        ax.add_patch(select_button)
+        
+        # Mount hole outline
+        mount_outline = Circle((select_button_x, select_y), ROUND_BUTTON_HOLE/2,
+                             linewidth=1, edgecolor='orange', facecolor='none', linestyle='--')
+        ax.add_patch(mount_outline)
+        
+        # Label
+        ax.text(select_button_x, select_y, f'R{row+1}',
+               ha='center', va='center', fontweight='bold', fontsize=10)
+        ax.text(select_button_x, select_y + ROUND_BUTTON_HOLE/2 + 8, f'{ROUND_BUTTON_HOLE}mm hole',
+               ha='center', va='center', fontsize=8)
     
-    # Square button outline (18×18mm)
-    button_rect = plt.Rectangle((button_x, button_y), square_button_size, square_button_size,
-                               fill=False, edgecolor=button_color, linewidth=2)
-    ax.add_patch(button_rect)
+    # Legend
+    legend_x = 15
+    legend_y = 105
     
-    # Button mounting hole (16mm diameter, dashed)
-    mount_circle = plt.Circle((button_x + square_button_size/2, button_y + square_button_size/2), 
-                             square_mount_hole/2, fill=False, edgecolor=button_color, 
-                             linewidth=1, linestyle='--')
-    ax.add_patch(mount_circle)
+    ax.text(legend_x, legend_y, 'Legend:', fontweight='bold', fontsize=12)
     
-    # Add button label
-    ax.text(button_x + square_button_size/2, button_y + square_button_size/2, button_labels[i],
-            ha='center', va='center', fontsize=8)
-
-# Draw row select buttons (33mm diameter)
-select_positions = [(select_button_x, row1_y + display_height/2),
-                   (select_button_x, row2_y + display_height/2)]
-select_labels = ['R1', 'R2']
-
-for i, (sx, sy) in enumerate(select_positions):
-    # Select button circle (33mm diameter)
-    select_circle = plt.Circle((sx, sy), round_button_diameter/2,
-                              fill=False, edgecolor=select_color, linewidth=3)
-    ax.add_patch(select_circle)
+    # TFT Display legend
+    legend_rect = Rectangle((legend_x, legend_y+8), 25, 8, 
+                          linewidth=2, edgecolor='blue', facecolor='lightblue', alpha=0.7)
+    ax.add_patch(legend_rect)
+    ax.text(legend_x + 30, legend_y + 12, f'TFT Display ({DISPLAY_WIDTH}×{DISPLAY_HEIGHT}mm)', fontsize=9)
     
-    # Mount hole indication (33mm diameter, dotted)
-    mount_circle = plt.Circle((sx, sy), round_button_diameter/2,
-                             fill=False, edgecolor=select_color, linewidth=1, linestyle=':')
-    ax.add_patch(mount_circle)
+    # Mount hole legend
+    legend_hole = Circle((legend_x + 12, legend_y + 25), 1, 
+                        linewidth=1, edgecolor='red', facecolor='white')
+    ax.add_patch(legend_hole)
+    ax.text(legend_x + 30, legend_y + 25, 'Mount Hole (Ø2mm, 1.5mm from edge)', fontsize=9)
     
-    # Row select label
-    ax.text(sx, sy, select_labels[i], ha='center', va='center', 
-            fontsize=12, fontweight='bold')
+    # Wire hole legend
+    wire_legend1 = Circle((legend_x + 10, legend_y + 38), 1.5, 
+                         linewidth=2, edgecolor='green', facecolor='white')
+    wire_legend2 = Circle((legend_x + 14, legend_y + 38), 1.5, 
+                         linewidth=2, edgecolor='green', facecolor='white')
+    ax.add_patch(wire_legend1)
+    ax.add_patch(wire_legend2)
+    ax.text(legend_x + 30, legend_y + 38, 'Wire Holes (Ø3mm)', fontsize=9)
+    
+    # Square button legend
+    button_legend_rect = Rectangle((legend_x + 7, legend_y + 47), 10, 10,
+                                 linewidth=2, edgecolor='purple', facecolor='white')
+    button_legend_hole = Circle((legend_x + 12, legend_y + 52), 5,
+                              linewidth=1, edgecolor='purple', facecolor='none', linestyle='--')
+    ax.add_patch(button_legend_rect)
+    ax.add_patch(button_legend_hole)
+    ax.text(legend_x + 30, legend_y + 52, f'Task Button 18×18mm ({SQUARE_BUTTON_HOLE}mm mount hole)', fontsize=9)
+    
+    # Round button legend
+    round_legend = Circle((legend_x + 12, legend_y + 68), 7,
+                         linewidth=2, edgecolor='orange', facecolor='white')
+    round_legend_hole = Circle((legend_x + 12, legend_y + 68), 7,
+                             linewidth=1, edgecolor='orange', facecolor='none', linestyle='--')
+    ax.add_patch(round_legend)
+    ax.add_patch(round_legend_hole)
+    ax.text(legend_x + 30, legend_y + 68, f'Select Button Ø{ROUND_BUTTON_HOLE}mm ({ROUND_BUTTON_HOLE}mm mount hole)', fontsize=9)
+    
+    # Print instructions
+    ax.text(10, A4_HEIGHT - 5, 
+           'Print at 100% scale on A4 landscape. Verify: TFT displays should measure exactly 57.9×29.0mm',
+           fontsize=10, style='italic')
+    
+    # Remove axes
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['bottom'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+    
+    return fig, ax
 
-# Add dimension annotations
-def add_dimension_line(x1, y1, x2, y2, offset, text, text_rotation=0):
-    """Add a dimension line with text"""
-    ax.plot([x1, x2], [y1, y2], 'k-', linewidth=0.5, alpha=0.7)
-    ax.plot([x1, x1], [y1-offset/2, y1+offset/2], 'k-', linewidth=0.5, alpha=0.7)
-    ax.plot([x2, x2], [y2-offset/2, y2+offset/2], 'k-', linewidth=0.5, alpha=0.7)
-    mid_x, mid_y = (x1+x2)/2, (y1+y2)/2
-    ax.text(mid_x, mid_y-offset, text, ha='center', va='top', fontsize=8, 
-            rotation=text_rotation, color='gray')
+def add_dimension_line(ax, x1, y1, x2, y2, text, rotation=0):
+    """Add a dimension line with text."""
+    # Draw the line
+    ax.plot([x1, x2], [y1, y2], color='gray', linewidth=1, linestyle='--')
+    
+    # Add dimension text
+    mid_x = (x1 + x2) / 2
+    mid_y = (y1 + y2) / 2
+    ax.text(mid_x, mid_y, text, ha='center', va='center', fontsize=8, 
+           rotation=rotation, bbox=dict(boxstyle="round,pad=0.2", facecolor='white', alpha=0.8))
 
-# Key dimensions
-# Display width
-add_dimension_line(start_x, row1_y-10, start_x+display_width, row1_y-10, 3, f'{display_width}mm')
+def main():
+    """Generate the corrected template."""
+    print("Generating ChoreTracker A4 Template with CORRECTED dimensions...")
+    
+    # Generate PNG version
+    fig, ax = create_template()
+    
+    # Save as high-resolution PNG
+    output_png = 'template_design_corrected.png'
+    fig.savefig(output_png, dpi=300, bbox_inches='tight', facecolor='white')
+    print(f"✓ PNG template saved: {output_png}")
+    
+    plt.close(fig)
+    
+    print("\n" + "="*60)
+    print("CORRECTED TEMPLATE SUMMARY")
+    print("="*60)
+    print(f"TFT Display Size: {DISPLAY_WIDTH} × {DISPLAY_HEIGHT}mm")
+    print(f"Mount Holes: 1.5mm from display edges")
+    print(f"Square Button: 18×18mm surface, {SQUARE_BUTTON_HOLE}mm mount hole") 
+    print(f"Round Button: Ø{ROUND_BUTTON_HOLE}mm mount hole")
+    print("="*60)
+    print("Usage:")
+    print("1. Print at 100% scale on A4 landscape")
+    print(f"2. Verify first display measures exactly {DISPLAY_WIDTH}×{DISPLAY_HEIGHT}mm")
+    print("3. Use as template for cutting and drilling")
+    print("="*60)
 
-# Display height  
-add_dimension_line(start_x-15, row1_y, start_x-15, row1_y+display_height, 3, f'{display_height}mm', 90)
-
-# Spacing between displays
-add_dimension_line(start_x+display_width, row1_y-5, start_x+display_width+horizontal_spacing, row1_y-5, 2, f'{horizontal_spacing}mm')
-
-# Row spacing
-add_dimension_line(start_x-25, row1_y+display_height/2, start_x-25, row2_y+display_height/2, 3, f'{vertical_spacing}mm', 90)
-
-# Title
-plt.title('ChoreTracker A4 Template - 2×4 Display Grid\n(Corrected: 29×25.8mm Landscape Displays)', 
-          fontsize=14, fontweight='bold', pad=20)
-
-# Legend
-legend_x, legend_y = 250, 180
-legend_items = [
-    (display_color, 'TFT Display (29×25.8mm)', 'rect'),
-    (mount_color, 'Mount Holes (Ø2mm)', 'circle'),
-    (wire_color, 'Wire Holes (Ø3mm)', 'circle'),
-    (button_color, 'Task Buttons (18×18mm)', 'rect'),
-    (button_color, '16mm Mount Hole', 'dashed_circle'),
-    (select_color, 'Select Buttons (Ø33mm)', 'circle')
-]
-
-ax.text(legend_x, legend_y, 'Legend:', fontsize=10, fontweight='bold')
-for i, item in enumerate(legend_items):
-    y_pos = legend_y - 15 - i*12
-    if len(item) == 3:
-        color, text, shape = item
-        if shape == 'rect':
-            legend_rect = plt.Rectangle((legend_x, y_pos-3), 8, 6, fill=False, edgecolor=color, linewidth=2)
-            ax.add_patch(legend_rect)
-        elif shape == 'circle':
-            legend_circle = plt.Circle((legend_x+4, y_pos), 3, fill=False, edgecolor=color, linewidth=2)
-            ax.add_patch(legend_circle)
-        elif shape == 'dashed_circle':
-            legend_circle = plt.Circle((legend_x+4, y_pos), 3, fill=False, edgecolor=color, linewidth=1, linestyle='--')
-            ax.add_patch(legend_circle)
-        ax.text(legend_x+15, y_pos, text, fontsize=8, va='center')
-
-# Add print instructions
-ax.text(10, 10, 'Print at 100% scale on A4 landscape. Verify: TFT displays should measure exactly 29×25.8mm',
-        fontsize=9, style='italic', bbox=dict(boxstyle="round,pad=0.3", facecolor="lightyellow"))
-
-# Save files
-plt.tight_layout()
-plt.savefig('template_design_corrected.png', dpi=300, bbox_inches='tight', facecolor='white')
-plt.savefig('choretracker_template_corrected.svg', format='svg', bbox_inches='tight', facecolor='white')
-plt.show()
-
-# Print summary
-print("✅ Corrected template generated with accurate dimensions:")
-print(f"   • TFT Displays: {display_width}×{display_height}mm (landscape orientation)")
-print(f"   • Task Buttons: {square_button_size}×{square_button_size}mm surface, Ø{square_mount_hole}mm mount hole")
-print(f"   • Select Buttons: Ø{round_button_diameter}mm (33mm mount hole)")
-print(f"   • Display spacing: {horizontal_spacing}mm gap ({display_width + horizontal_spacing}mm centre-to-centre)")
-print(f"   • Row spacing: {vertical_spacing}mm centre-to-centre")
-print(f"   • Mount holes: Ø{mount_hole_size}mm (display corners)")
-print(f"   • Wire holes: Ø{wire_hole_size}mm (two per display)")
-print("   • Files saved: template_design_corrected.png and choretracker_template_corrected.svg") 
+if __name__ == "__main__":
+    main() 
