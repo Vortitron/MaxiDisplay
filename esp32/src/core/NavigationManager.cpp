@@ -172,4 +172,11 @@ void NavigationManager::resetToColumn(int rowIndex, int columnIndex) {
 	rowStates[rowIndex].needsUpdate = true;
 	
 	Serial.printf("NavigationManager: Row %d reset to column %d\n", rowIndex, columnIndex);
+}
+
+void NavigationManager::forceDisplayUpdate(int rowIndex) {
+	if (rowIndex >= 0 && rowIndex < TOTAL_ROWS) {
+		rowStates[rowIndex].needsUpdate = true;
+		Serial.printf("NavigationManager: Forced display update for row %d\n", rowIndex);
+	}
 } 

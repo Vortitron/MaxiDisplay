@@ -44,6 +44,7 @@ public:
 	// Configuration
 	static void setColumnDisplayTime(unsigned long timeMs);
 	static void resetToColumn(int rowIndex, int columnIndex);
+	static void forceDisplayUpdate(int rowIndex);
 	
 private:
 	static RowState rowStates[TOTAL_ROWS];

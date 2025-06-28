@@ -34,3 +34,10 @@
 // Audio Configuration (GPIO 11)
 #define AUDIO_ENABLED false
 #define AUDIO_PIN 11
+
+// Demo Mode Configuration
+#define DEMO_ACTIVATION_TIME_MS 5000     // 5 seconds to activate demo
+#define DEMO_ANIMATION_FPS 20            // Display update rate in demo mode
+#define DEMO_COLOUR_CYCLE_MS 3000        // Colour change interval
+#define DEMO_SPARKLE_FREQUENCY 100       // Sparkle effect timing
+#define DEMO_AUTO_START false            // Auto-start demo on boot
