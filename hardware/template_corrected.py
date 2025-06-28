@@ -38,7 +38,8 @@ DISPLAY_SPACING = 5         # Gap between displays
 # Redesigned vertical positions: B-D-S-D-B
 BUTTONS_ROW1_Y = 25      # Top buttons row
 DISPLAYS_ROW1_Y = 50     # First display row
-SELECT_BUTTONS_Y = 90    # Select buttons between rows
+SELECT_BUTTON1_Y = 100   # R1 select button (lower than before)
+SELECT_BUTTON2_Y = 108   # R2 select button (slightly lower than R1 to show it goes with lower screens)
 DISPLAYS_ROW2_Y = 115    # Second display row
 BUTTONS_ROW2_Y = 150     # Bottom buttons row
 
@@ -110,8 +111,8 @@ def create_template():
                 hole = Circle((hx, hy), 1, linewidth=1, edgecolor='red', facecolor='white')
                 ax.add_patch(hole)
             
-            # Pin holes (left side of display for back connector)
-            pin_x = x - 5  # 5mm to the left of display
+            # Pin holes (inside display near right edge for back connector)
+            pin_x = x + DISPLAY_WIDTH - 8  # Inside the display, 8mm from right edge
             pin_y_center = y + DISPLAY_HEIGHT/2
             pin_positions = [
                 (pin_x, pin_y_center - 3),  # Top pin
@@ -160,31 +161,31 @@ def create_template():
     select_button2_x = MARGIN_LEFT + 3 * (DISPLAY_WIDTH + DISPLAY_SPACING) + DISPLAY_WIDTH/2  # Screen 4 position
     
     # Row 1 select button (at screen 1 position)
-    select_button = Circle((select_button1_x, SELECT_BUTTONS_Y), ROUND_BUTTON_HOLE/2,
+    select_button = Circle((select_button1_x, SELECT_BUTTON1_Y), ROUND_BUTTON_HOLE/2,
                          linewidth=3, edgecolor='orange', facecolor='white')
     ax.add_patch(select_button)
     
-    mount_outline = Circle((select_button1_x, SELECT_BUTTONS_Y), ROUND_BUTTON_HOLE/2,
+    mount_outline = Circle((select_button1_x, SELECT_BUTTON1_Y), ROUND_BUTTON_HOLE/2,
                          linewidth=1, edgecolor='orange', facecolor='none', linestyle='--')
     ax.add_patch(mount_outline)
     
-    ax.text(select_button1_x, SELECT_BUTTONS_Y, 'R1',
+    ax.text(select_button1_x, SELECT_BUTTON1_Y, 'R1',
            ha='center', va='center', fontweight='bold', fontsize=10)
-    ax.text(select_button1_x, SELECT_BUTTONS_Y + ROUND_BUTTON_HOLE/2 + 8, f'{ROUND_BUTTON_HOLE}mm hole',
+    ax.text(select_button1_x, SELECT_BUTTON1_Y + ROUND_BUTTON_HOLE/2 + 8, f'{ROUND_BUTTON_HOLE}mm hole',
            ha='center', va='center', fontsize=8)
     
     # Row 2 select button (at screen 4 position)
-    select_button = Circle((select_button2_x, SELECT_BUTTONS_Y), ROUND_BUTTON_HOLE/2,
+    select_button = Circle((select_button2_x, SELECT_BUTTON2_Y), ROUND_BUTTON_HOLE/2,
                          linewidth=3, edgecolor='orange', facecolor='white')
     ax.add_patch(select_button)
     
-    mount_outline = Circle((select_button2_x, SELECT_BUTTONS_Y), ROUND_BUTTON_HOLE/2,
+    mount_outline = Circle((select_button2_x, SELECT_BUTTON2_Y), ROUND_BUTTON_HOLE/2,
                          linewidth=1, edgecolor='orange', facecolor='none', linestyle='--')
     ax.add_patch(mount_outline)
     
-    ax.text(select_button2_x, SELECT_BUTTONS_Y, 'R2',
+    ax.text(select_button2_x, SELECT_BUTTON2_Y, 'R2',
            ha='center', va='center', fontweight='bold', fontsize=10)
-    ax.text(select_button2_x, SELECT_BUTTONS_Y + ROUND_BUTTON_HOLE/2 + 8, f'{ROUND_BUTTON_HOLE}mm hole',
+    ax.text(select_button2_x, SELECT_BUTTON2_Y + ROUND_BUTTON_HOLE/2 + 8, f'{ROUND_BUTTON_HOLE}mm hole',
            ha='center', va='center', fontsize=8)
     
     # Legend
@@ -212,7 +213,7 @@ def create_template():
                          linewidth=2, edgecolor='green', facecolor='white')
     ax.add_patch(pin_legend1)
     ax.add_patch(pin_legend2)
-    ax.text(legend_x + 30, legend_y + 38, 'Pin Holes (Ø3mm, back connector)', fontsize=9)
+    ax.text(legend_x + 30, legend_y + 38, 'Pin Holes (Ø3mm, inside display near right)', fontsize=9)
     
     # Square button legend
     button_legend_rect = Rectangle((legend_x + 7, legend_y + 47), 10, 10,
@@ -234,7 +235,7 @@ def create_template():
     
     # Print instructions
     ax.text(10, A4_HEIGHT - 5, 
-           'Print at 100% scale on A4 landscape. REDESIGNED: B-D-S-D-B compact layout. Verify: displays = 57.9×29.0mm',
+           'Print at 100% scale on A4 landscape. UPDATED: R1/R2 repositioned, pin holes inside displays. Verify: displays = 57.9×29.0mm',
            fontsize=10, style='italic')
     
     # Remove axes
@@ -277,15 +278,15 @@ def main():
     print("="*60)
     print(f"TFT Display Size: {DISPLAY_WIDTH} × {DISPLAY_HEIGHT}mm")
     print(f"Mount Holes: 1.5mm from display edges")
-    print(f"Pin Holes: Left side for back connectors (Ø3mm)")
+    print(f"Pin Holes: Inside displays near right edge (Ø3mm)")
     print(f"Square Button: 18×18mm surface, {SQUARE_BUTTON_HOLE}mm mount hole") 
     print(f"Round Button: Ø{ROUND_BUTTON_HOLE}mm mount hole")
-    print(f"Layout: Displays moved left for button clearance")
+    print(f"Layout: R1/R2 repositioned, R2 lower to show association with lower screens")
     print("="*60)
     print("Usage:")
     print("1. Print at 100% scale on A4 landscape")
     print(f"2. Verify first display measures exactly {DISPLAY_WIDTH}×{DISPLAY_HEIGHT}mm")
-    print("3. Pin holes are for back-side connectors")
+    print("3. Pin holes are inside displays near right edge for connectors")
     print("4. Use as template for cutting and drilling")
     print("="*60)
 
